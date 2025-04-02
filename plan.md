@@ -23,6 +23,12 @@ Build an autonomous AI agent web app called Multi-RoleAI that supports:
 - **Deployment:** VPS with Nginx as a reverse proxy and SSL (using Let's Encrypt)
 - **Development Aid:** Windsurf Cascade to streamline code generation and refactoring
 
+> **Reference Documentation:**
+> - [Agent Architecture](agent-architecture.md) - For AI agent implementation details
+> - [Tool Integration](tool-integration.md) - For integrating external tools and systems
+> - [UI Design Guidelines](ui-design.md) - For consistent UI/UX implementation
+> - [Project Rules](.windsurfrules) - For code style and development standards
+
 ---
 
 ## **Phase 1 – Core Infrastructure & Basic Agent Functionality**
@@ -34,6 +40,7 @@ Build an autonomous AI agent web app called Multi-RoleAI that supports:
    - [ ] Set up Tailwind CSS and UI component library
    - [ ] Configure Prisma ORM with PostgreSQL
    - [ ] Set up environment variables for API keys and secrets
+   > **Reference:** [UI Design Guidelines](ui-design.md) for styling setup
 
 - [ ] 2. **Backend – Core API and Database**
    - [ ] Design database schema for Users, Tasks, Documents, and Agent Sessions
@@ -41,6 +48,7 @@ Build an autonomous AI agent web app called Multi-RoleAI that supports:
    - [ ] Create API endpoints for user management
    - [ ] Set up file storage system for document management
    - [ ] Implement basic error handling and logging
+   > **Reference:** [Tool Integration](tool-integration.md) for database tool implementation
 
 - [ ] 3. **Frontend – UI Framework**
    - [ ] Create authentication pages (login, register)
@@ -48,6 +56,7 @@ Build an autonomous AI agent web app called Multi-RoleAI that supports:
    - [ ] Implement dashboard for task management
    - [ ] Create workspace UI for document editing and agent interaction
    - [ ] Set up state management for application
+   > **Reference:** [UI Design Guidelines](ui-design.md) for component styling
 
 - [ ] 4. **Basic AI Agent Integration**
    - [ ] Create API wrapper for Anthropic Claude API
@@ -55,6 +64,7 @@ Build an autonomous AI agent web app called Multi-RoleAI that supports:
    - [ ] Build basic prompt engineering system
    - [ ] Create simple agent execution flow
    - [ ] Implement error handling for API calls
+   > **Reference:** [Agent Architecture](agent-architecture.md) for agent implementation patterns
 
 ## **Phase 2 – Advanced Agent Capabilities**
 
@@ -64,6 +74,7 @@ Build an autonomous AI agent web app called Multi-RoleAI that supports:
    - [ ] Implement specialized agents for different tasks
    - [ ] Create agent communication protocol
    - [ ] Build agent memory and context management
+   > **Reference:** [Agent Architecture](agent-architecture.md) for orchestrator-worker model
 
 - [ ] 2. **Tool Integration**
    - [ ] Implement web browsing capability for agents
@@ -71,6 +82,7 @@ Build an autonomous AI agent web app called Multi-RoleAI that supports:
    - [ ] Build file system access for agents
    - [ ] Implement data processing tools
    - [ ] Create visualization tools for data presentation
+   > **Reference:** [Tool Integration](tool-integration.md) for tool registry implementation
 
 - [ ] 3. **Task Planning and Execution**
    - [ ] Build task decomposition system
@@ -78,6 +90,7 @@ Build an autonomous AI agent web app called Multi-RoleAI that supports:
    - [ ] Create execution monitoring and error recovery
    - [ ] Build progress reporting system
    - [ ] Implement asynchronous task execution
+   > **Reference:** [Agent Architecture](agent-architecture.md) for task management system
 
 - [ ] 4. **Enhanced UI for Agent Interaction**
    - [ ] Create chat interface for agent communication
@@ -85,6 +98,7 @@ Build an autonomous AI agent web app called Multi-RoleAI that supports:
    - [ ] Implement file and document browser
    - [ ] Create tool selection interface
    - [ ] Build settings and configuration UI
+   > **Reference:** [UI Design Guidelines](ui-design.md) for UI components
 
 ## **Phase 3 – Advanced Features & Refinements**
 
@@ -94,24 +108,28 @@ Build an autonomous AI agent web app called Multi-RoleAI that supports:
    - [ ] Build code understanding and generation
    - [ ] Create data visualization capabilities
    - [ ] Implement document analysis tools
+   > **Reference:** [Tool Integration](tool-integration.md) for multi-modal tool implementation
 
 - [ ] 2. **Advanced Document Management**
    - [ ] Build rich text editing with TipTap
    - [ ] Implement document versioning
    - [ ] Create document sharing and collaboration
    - [ ] Build document templates and organization
+   > **Reference:** [UI Design Guidelines](ui-design.md) for document UI components
 
 - [ ] 3. **Deployment System**
    - [ ] Create "Spaces" feature for deploying web applications
    - [ ] Implement containerization for deployed apps
    - [ ] Build domain management for user projects
    - [ ] Create deployment monitoring and logs
+   > **Reference:** [Tool Integration](tool-integration.md) for deployment tools
 
 - [ ] 4. **Security Enhancements**
    - [ ] Implement sandboxed execution environment
    - [ ] Create permission system for tool access
    - [ ] Build content filtering and safety measures
    - [ ] Implement rate limiting and resource allocation
+   > **Reference:** [Tool Integration](tool-integration.md) for security implementation
 
 ## **Phase 4 – Deployment & Scaling**
 
@@ -121,24 +139,28 @@ Build an autonomous AI agent web app called Multi-RoleAI that supports:
    - [ ] Configure Nginx as reverse proxy
    - [ ] Set up SSL with Let's Encrypt
    - [ ] Implement database backup system
+   > **Reference:** [Tool Integration](tool-integration.md) for deployment tools
 
 - [ ] 2. **Monitoring and Maintenance**
    - [ ] Set up logging and monitoring
    - [ ] Implement error tracking
    - [ ] Create admin dashboard for system monitoring
    - [ ] Build automated backup system
+   > **Reference:** [Tool Integration](tool-integration.md) for monitoring tools
 
 - [ ] 3. **Performance Optimization**
    - [ ] Implement caching strategies
    - [ ] Optimize database queries
    - [ ] Create resource management system
    - [ ] Set up load balancing for multi-user support
+   > **Reference:** [Tool Integration](tool-integration.md) for database optimization
 
 - [ ] 4. **Documentation and User Guides**
    - [ ] Create developer documentation
    - [ ] Build user guides and tutorials
    - [ ] Implement in-app help system
    - [ ] Create API documentation for extensions
+   > **Reference:** [UI Design Guidelines](ui-design.md) for help system UI
 
 ---
 
@@ -148,24 +170,28 @@ Build an autonomous AI agent web app called Multi-RoleAI that supports:
 - Independent execution of complex tasks without constant human intervention
 - Asynchronous processing that continues even when user is offline
 - Multi-step planning and execution with progress tracking
+> **Reference:** [Agent Architecture](agent-architecture.md) for task execution implementation
 
 ### **2. Multi-Modal Processing**
 - Text generation and analysis
 - Code writing and execution
 - Image analysis and generation (optional)
 - Data processing and visualization
+> **Reference:** [Tool Integration](tool-integration.md) for multi-modal capabilities
 
 ### **3. Tool Integration**
 - Web browsing capability to research information
 - Code editor and execution environment
 - File system access for document management
 - Database interaction for structured data
+> **Reference:** [Tool Integration](tool-integration.md) for tool registry system
 
 ### **4. Deployment Capabilities**
 - "Spaces" feature to deploy web applications
 - Custom domain support for user projects
 - Containerized deployment for isolation
 - Monitoring and logs for deployed applications
+> **Reference:** [Tool Integration](tool-integration.md) for deployment system
 
 ### **5. User Experience**
 - Chat interface for agent interaction
@@ -173,6 +199,7 @@ Build an autonomous AI agent web app called Multi-RoleAI that supports:
 - Document and file management
 - Settings and configuration options
 - Collaborative features (optional)
+> **Reference:** [UI Design Guidelines](ui-design.md) for UI components and styling
 
 ---
 
@@ -182,20 +209,24 @@ Build an autonomous AI agent web app called Multi-RoleAI that supports:
   - Write clear, self-contained functions and components
   - Use TypeScript interfaces and types for better code understanding
   - Implement consistent naming conventions as per project rules
+  > **Reference:** [Project Rules](.windsurfrules) for code style guidelines
 
 - **Code Comments & Documentation:**  
   - Use JSDoc comments for functions and components
   - Document API endpoints and data structures
   - Create README files for major components
+  > **Reference:** [Project Rules](.windsurfrules) for documentation standards
 
 - **Iterative Development:**  
   - Break down complex features into smaller tasks
   - Use the task list to track progress
   - Regularly commit code with descriptive messages
+  > **Reference:** [Project Rules](.windsurfrules) for development workflow
 
 - **Testing & Quality:**  
   - Write unit tests for critical functionality
   - Implement integration tests for API endpoints
   - Use linting and formatting tools for code quality
+  > **Reference:** [Project Rules](.windsurfrules) for testing guidelines
 
 ---

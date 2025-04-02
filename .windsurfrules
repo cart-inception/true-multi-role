@@ -1,5 +1,11 @@
 # Windsurf Project Rules for Multi-RoleAI App Development
 
+## Reference Guidelines
+1. **Planning**
+    - Always check the plan.md file for context on what step of development you are on and how to move forward. 
+    - Always update with new tasks that need to be completed during research. Add tasks in the correct place.
+    - Always mark a task don e after you have completed it. 
+
 ## Code Style and Organization
 
 1. **File Structure**
