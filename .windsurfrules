@@ -1,0 +1,78 @@
+# Windsurf Project Rules for Multi-RoleAI App Development
+
+## Code Style and Organization
+
+1. **File Structure**
+   - Follow a clear, modular file structure
+   - Group related functionality in dedicated directories
+   - Use descriptive file and directory names
+
+2. **Naming Conventions**
+   - Use camelCase for variables and functions
+   - Use PascalCase for components, classes, and interfaces
+   - Use UPPER_SNAKE_CASE for constants
+   - Use kebab-case for file names
+
+3. **TypeScript Usage**
+   - Use TypeScript for all code files
+   - Define proper interfaces and types for all data structures
+   - Avoid using `any` type whenever possible
+   - Use proper type annotations for function parameters and return values
+
+4. **Component Structure**
+   - Follow a consistent component structure
+   - Separate UI components from logic/data handling
+   - Use functional components with hooks instead of class components
+   - Keep components focused on a single responsibility
+
+## Architecture Guidelines
+
+1. **Frontend**
+   - Use React with Next.js for the frontend
+   - Implement a responsive design with Tailwind CSS
+   - Use TipTap for rich text editing
+   - Implement proper state management with React Context or Redux
+
+2. **Backend**
+   - Use Next.js API routes for backend functionality
+   - Implement proper error handling and validation
+   - Use Prisma as ORM for database operations
+   - Follow RESTful API design principles
+
+3. **Authentication**
+   - Use NextAuth.js for authentication
+   - Implement proper role-based access control
+   - Secure all API endpoints with authentication middleware
+   - Store sensitive information in environment variables
+
+4. **AI Integration**
+   - Use Anthropic's Claude API for AI capabilities
+   - Implement proper error handling for API calls
+   - Use streaming responses when appropriate
+   - Cache responses when possible to reduce API usage
+
+## Development Workflow
+
+1. **Version Control**
+   - Use Git for version control
+   - Write clear, descriptive commit messages
+   - Use feature branches for new functionality
+   - Review code before merging
+
+2. **Testing**
+   - Write unit tests for critical functionality
+   - Implement integration tests for API endpoints
+   - Test UI components with React Testing Library
+   - Ensure all tests pass before deployment
+
+3. **Documentation**
+   - Document all API endpoints
+   - Add JSDoc comments to functions and components
+   - Keep README files up to date
+   - Document environment variables and configuration
+
+4. **Deployment**
+   - Use a VPS for hosting
+   - Set up proper CI/CD pipeline
+   - Implement monitoring and logging
+   - Perform regular backups of data
