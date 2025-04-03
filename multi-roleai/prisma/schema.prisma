@@ -1,0 +1,310 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// User model
+model User {
+  id               String            @id @default(cuid())
+  name             String?
+  email            String            @unique
+  emailVerified    DateTime?
+  image            String?
+  password         String?
+  plan             String?           @default("free")
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
+  accounts         Account[]
+  sessions         Session[]
+  tasks            Task[]
+  documents        Document[]
+  agentSessions    AgentSession[]
+  workspaces       Workspace[]
+  agents           Agent[]
+  roles            UserRole[]
+  permissions      UserPermission[]
+  rateLimits       CustomRateLimit[]
+  usageLogs        UsageLog[]
+  moderationLogs   ModerationLog[]
+  securityAuditLogs SecurityAuditLog[]
+  spaces           Space[]
+}
+
+// NextAuth Account model
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+// NextAuth Session model
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+// NextAuth VerificationToken model
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+// Workspace model for organizing user content
+model Workspace {
+  id          String     @id @default(cuid())
+  name        String
+  description String?
+  userId      String
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  user        User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  documents   Document[]
+  tasks       Task[]
+  agents      Agent[]
+}
+
+// Task model
+model Task {
+  id            String        @id @default(cuid())
+  title         String
+  description   String?       @db.Text
+  status        TaskStatus    @default(PENDING)
+  priority      TaskPriority  @default(MEDIUM)
+  userId        String
+  workspaceId   String?
+  parentTaskId  String?
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+  completedAt   DateTime?
+  user          User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  workspace     Workspace?    @relation(fields: [workspaceId], references: [id])
+  parentTask    Task?         @relation("SubTasks", fields: [parentTaskId], references: [id])
+  subTasks      Task[]        @relation("SubTasks")
+  agentSessions AgentSession[]
+  documents     Document[]
+}
+
+// Document model
+model Document {
+  id          String       @id @default(cuid())
+  title       String
+  content     String?      @db.Text
+  contentType ContentType  @default(TEXT)
+  userId      String
+  workspaceId String?
+  taskId      String?
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  user        User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  workspace   Workspace?   @relation(fields: [workspaceId], references: [id])
+  task        Task?        @relation(fields: [taskId], references: [id])
+}
+
+// AgentSession model
+model AgentSession {
+  id          String            @id @default(cuid())
+  name        String?
+  status      AgentSessionStatus @default(ACTIVE)
+  userId      String
+  taskId      String?
+  context     Json?
+  history     Json?
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+  completedAt DateTime?
+  user        User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  task        Task?             @relation(fields: [taskId], references: [id])
+}
+
+// Agent model
+model Agent {
+  id           String   @id @default(cuid())
+  name         String
+  description  String?
+  role         String
+  systemPrompt String?  @db.Text
+  settings     Json?
+  userId       String
+  workspaceId  String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  workspace    Workspace? @relation(fields: [workspaceId], references: [id], onDelete: SetNull)
+}
+
+// Role and Permission models for security
+model Role {
+  id             String          @id @default(cuid())
+  name           String          @unique
+  description    String?
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+  users          UserRole[]
+  permissions    RolePermission[]
+}
+
+model UserRole {
+  id        String   @id @default(cuid())
+  userId    String
+  roleId    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  role      Role     @relation(fields: [roleId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, roleId])
+}
+
+model UserPermission {
+  id           String   @id @default(cuid())
+  userId       String
+  resourceType String
+  resourceId   String
+  level        String
+  conditions   String?  @db.Text
+  grantedBy    String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, resourceType, resourceId])
+}
+
+model RolePermission {
+  id           String   @id @default(cuid())
+  roleId       String
+  resourceType String
+  resourceId   String
+  level        String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  role         Role     @relation(fields: [roleId], references: [id], onDelete: Cascade)
+
+  @@unique([roleId, resourceType, resourceId])
+}
+
+// Rate limiting and resource quotas
+model CustomRateLimit {
+  id         String   @id @default(cuid())
+  userId     String
+  type       String
+  resourceId String   @default("")
+  limit      Int
+  window     Int
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, type, resourceId])
+}
+
+model UsageLog {
+  id         String   @id @default(cuid())
+  userId     String
+  type       String
+  resourceId String?
+  amount     Int      @default(1)
+  timestamp  DateTime @default(now())
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+// Content filtering and moderation
+model ModerationLog {
+  id          String   @id @default(cuid())
+  userId      String?
+  isAllowed   Boolean  @default(true)
+  categories  String?  @db.Text
+  reason      String?
+  contentHash String
+  timestamp   DateTime @default(now())
+  user        User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+}
+
+// Security audit log
+model SecurityAuditLog {
+  id        String   @id @default(cuid())
+  userId    String?
+  action    String
+  resource  String?
+  details   String?  @db.Text
+  ipAddress String?
+  userAgent String?
+  timestamp DateTime @default(now())
+  user      User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+}
+
+// Space model for deployment system
+model Space {
+  id           String   @id @default(cuid())
+  name         String
+  description  String?
+  userId       String
+  status       String
+  url          String?
+  customDomain String?
+  repoUrl      String?
+  config       Json?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+// Enums
+enum TaskStatus {
+  PENDING
+  IN_PROGRESS
+  COMPLETED
+  FAILED
+  CANCELLED
+}
+
+enum TaskPriority {
+  LOW
+  MEDIUM
+  HIGH
+  URGENT
+}
+
+enum ContentType {
+  TEXT
+  MARKDOWN
+  CODE
+  JSON
+  HTML
+}
+
+enum AgentSessionStatus {
+  ACTIVE
+  PAUSED
+  COMPLETED
+  FAILED
+}
